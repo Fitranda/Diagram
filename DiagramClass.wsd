@@ -1,0 +1,112 @@
+@startuml DiagramClass_FREINZ
+class Employee {
+    - employeeId: int
+    - employeeName: String
+    - address: String
+    - contact: String
+    - username: String
+    - password: String
+    - role: String
+    - status: int
+    + CreateEmployee(employee: Object): void
+    + UpdateEmployee(employee: Object): void
+    + DeleteEmployee(employee: Object): void
+    + getEmployee(): Object
+    + Login(username: String, password: String): Object
+    + Logout(): void
+}
+
+class Product {
+    - productId: int
+    - productName: String
+    - price: double
+    - stock: double
+    - categoryId: int
+    + getProduct(): Object
+    + CreateProduct(product: Object): void
+    + UpdateProduct(product: Object): void
+    + DeleteProduct(product: Object): void
+}
+
+class ProductCategory {
+    - categoryId: int
+    - categoryName: String
+    + getCategory(): String
+    + CreateCategory(category: Object): void
+    + UpdateCategory(category: Object): void
+    + DeleteCategory(category: Object): void
+}
+
+class Attendance {
+    - attendanceId: int
+    - employeeId: int
+    - date: datetime
+    - photo : String
+    - latitude: double
+    - longitude: double
+    - status: String
+    + getAttendance(): Object
+    + Attendance(attendance: Object): void
+}
+
+class Sale {
+    - saleId: int
+    - employeeId: int
+    - date: datetime
+    - discount: double
+    - discountText: double
+    - total: double
+    + getSale(): Object
+    + Sale(sale: Object): void
+}
+
+class SaleDetail {
+    - saleDetailId: int
+    - saleId: int
+    - productId: int
+    - quantity: double
+    - price: double
+    - subtotal: double
+}
+
+class Purchase {
+    - purchaseId: int
+    - employeeId: int
+    - supplierId: int
+    - date: datetime
+    - total: double
+    + getPurchase(): Object
+    + Purchase(purchase: Object): void
+}
+
+class PurchaseDetail {
+    - purchaseDetailId: int
+    - purchaseId: int
+    - productId: int
+    - quantity: double
+    - price: double
+    - discount: double
+    - subtotal: double
+}
+
+class Supplier {
+    - supplierId: int
+    - supplierName: String
+    - contact: String
+    + getSupplier(): Object
+    + CreateSupplier(supplier: Object): void
+    + UpdateSupplier(supplier: Object): void
+    + DeleteSupplier(supplier: Object): void
+}
+
+Product "1" --o "*" ProductCategory : " belongs to category"
+Sale "*" --o "1" Employee : " processed by"
+Purchase "*" --o "1" Employee : " handled by"
+Purchase "*" --o "1" Supplier : " from supplier"
+Attendance "*" --o "1" Employee : " for"
+SaleDetail "*" --* "1" Sale : " part of"
+SaleDetail "*" -- "*" Product : " contains"
+PurchaseDetail "*" --* "1" Purchase : " part of"
+PurchaseDetail "*" -- "*" Product : " contains"
+
+@enduml

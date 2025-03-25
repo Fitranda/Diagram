@@ -1,0 +1,17 @@
+@startuml SequenceDiagram_Login
+actor User
+boundary "Login Page" as LoginPage
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> LoginPage --++ : Enter username and password
+note right of LoginPage: Check username and password via api
+LoginPage -> APIService --++ : Login(username, password)
+note right of APIService: Check username and password\nin database
+APIService -> DB --++ : Login()
+DB --> APIService --++ : Return login result
+APIService --> APIService: Check login result
+APIService --> LoginPage -- : Return login result
+LoginPage --> User: Display success or error message
+@enduml
