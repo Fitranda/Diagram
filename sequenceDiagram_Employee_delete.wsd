@@ -1,0 +1,19 @@
+@startuml sequenceDiagram_Employee_delete
+actor User
+boundary "View" as View
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> View --++ : choose data
+View -> APIService --++ : DeleteEmployee()
+note right of APIService: Send data 
+APIService -> DB --++ : DeleteEmployee()
+note right of APIService: Run Query\nin database
+DB --> APIService --++ : Return status query
+alt #LightGreen  Success
+    APIService --> View  : Return message success
+else #Pink Failure
+    APIService --> View  : Return message failure
+end
+@enduml

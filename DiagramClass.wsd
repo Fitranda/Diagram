@@ -6,7 +6,9 @@ class Employee {
     - contact: String
     - username: String
     - password: String
+    - basicSalary: double
     - role: String
+    - storename : String
     - status: int
     + CreateEmployee(employee: Object): void
     + UpdateEmployee(employee: Object): void
@@ -56,6 +58,8 @@ class Sale {
     - discount: double
     - discountText: double
     - total: double
+    - payment: double
+    - change: double
     + getSale(): Object
     + Sale(sale: Object): void
 }
@@ -74,6 +78,8 @@ class Purchase {
     - employeeId: int
     - supplierId: int
     - date: datetime
+    - subtotal: double
+    - discount: double
     - total: double
     + getPurchase(): Object
     + Purchase(purchase: Object): void
@@ -85,7 +91,6 @@ class PurchaseDetail {
     - productId: int
     - quantity: double
     - price: double
-    - discount: double
     - subtotal: double
 }
 
@@ -99,6 +104,20 @@ class Supplier {
     + DeleteSupplier(supplier: Object): void
 }
 
+class Salary {
+    - salaryId: int
+    - employeeId: int
+    - date: datetime
+    - basicSalary: double
+    - bonus: double
+    - deduction: double
+    - amount: double
+    - status: String
+    + getSalary(): Object
+    + RecordSalary(salary: Object): void
+}
+
+Salary "*" --o "1" Employee : " for"
 Product "1" --o "*" ProductCategory : " belongs to category"
 Sale "*" --o "1" Employee : " processed by"
 Purchase "*" --o "1" Employee : " handled by"

@@ -1,0 +1,19 @@
+@startuml sequenceDiagram_ProductCategory_create
+actor User
+boundary "View" as View
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> View --++ : Fill in the form
+View -> APIService --++ : CreateProduct()
+note right of APIService: Send data 
+APIService -> DB --++ : CreateProduct()
+note right of APIService: Run Query\nin database
+DB --> APIService --++ : Return status query
+alt #LightGreen  Success
+    APIService --> View  : Return message success
+else #Pink Failure
+    APIService --> View  : Return message failure
+end
+@enduml

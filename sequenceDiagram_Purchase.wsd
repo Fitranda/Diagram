@@ -1,0 +1,20 @@
+@startuml sequenceDiagram_Purchase
+actor User
+boundary "View" as View
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> View --++ : Choose Product,\n fill in quantity\nand click save
+note right of View: Validate data\nand check if product\nis available in stock
+View -> APIService --++ : Purchase()
+note right of APIService: Send data 
+APIService -> DB --++ : Purchase()
+note right of APIService: Run Query\nin database
+DB --> APIService --++ : Return status query
+alt #LightGreen  Success
+    APIService --> View  : Return message success
+else #Pink Failure
+    APIService --> View  : Return message failure
+end
+@enduml

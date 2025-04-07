@@ -1,0 +1,15 @@
+@startuml sequenceDiagram_Product_getData
+actor User
+boundary "View" as View
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> View --++ : Click search
+View -> APIService --++ : getProduct()
+note right of APIService: Fetch data from database
+APIService -> DB --++ : getProduct()
+note right of APIService: Run Query \n in database
+DB --> APIService --++ : Return data
+APIService --> View : Display data
+@enduml

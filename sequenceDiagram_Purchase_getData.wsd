@@ -1,0 +1,15 @@
+@startuml sequenceDiagram_Purchase_getData
+actor User
+boundary "View" as View
+control "API Service" as APIService
+database "My Sql" as DB
+
+autonumber
+User -> View --++ : Choose date and click search
+View -> APIService --++ : getPurchase(date)
+note right of APIService: Fetch data from database\nbased on the selected date
+APIService -> DB --++ : getPurchase(date)
+note right of APIService: Run Query\nin database
+DB --> APIService --++ : Return data
+APIService --> View : Display data
+@enduml
