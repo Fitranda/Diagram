@@ -5,15 +5,25 @@ control "API Service" as APIService
 database "My Sql" as DB
 
 autonumber
-User -> View --++ : choose data and  change data in the form
-View -> APIService --++ : UpdateSupplier()
+activate User
+User -> View  : choose data and change data in the form
+activate View
+View -> APIService  : UpdateSupplier()
+deactivate View
+activate APIService
 note right of APIService: Send data 
-APIService -> DB --++ : UpdateSupplier()
+APIService -> DB  : UpdateSupplier()
 note right of APIService: Run Query\nin database
-DB --> APIService --++ : Return status query
-alt #LightGreen  Success
-    APIService --> View  : Return message success
+deactivate APIService
+activate DB
+DB --> APIService  : Return status query
+deactivate DB
+activate APIService
+alt #LightGreen Success
+    APIService --> View : Return message success
 else #Pink Failure
-    APIService --> View  : Return message failure
+    APIService --> View : Return message failure
 end
+deactivate APIService
+deactivate User
 @enduml

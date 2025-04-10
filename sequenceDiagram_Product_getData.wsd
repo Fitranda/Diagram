@@ -5,11 +5,21 @@ control "API Service" as APIService
 database "My Sql" as DB
 
 autonumber
-User -> View --++ : Click search
-View -> APIService --++ : getProduct()
+activate User
+User -> View : Click search
+activate View
+View -> APIService : getProduct()
+deactivate View
+activate APIService
 note right of APIService: Fetch data from database
-APIService -> DB --++ : getProduct()
-note right of APIService: Run Query \n in database
-DB --> APIService --++ : Return data
-APIService --> View : Display data
+APIService -> DB : getProduct()
+deactivate APIService
+activate DB
+note right of DB: Run Query \n in database
+DB --> APIService : Return data
+deactivate DB
+activate APIService
+APIService --> View --++: Display data
+deactivate APIService
+deactivate User
 @enduml

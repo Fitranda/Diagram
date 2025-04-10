@@ -5,15 +5,25 @@ control "API Service" as APIService
 database "My Sql" as DB
 
 autonumber
-User -> View --++ : Fill in the form
-View -> APIService --++ : CreateCategory()
-note right of APIService: Send data 
-APIService -> DB --++ : CreateCategory()
-note right of APIService: Run Query\nin database
-DB --> APIService --++ : Return status query
-alt #LightGreen  Success
-    APIService --> View  : Return message success
+activate User
+User -> View : Fill in the form
+activate View
+View -> APIService : CreateCategory()
+deactivate View
+activate APIService
+note right of APIService: Send data
+APIService -> DB : CreateCategory()
+deactivate APIService
+activate DB
+note right of DB: Run Query\nin database
+DB --> APIService : Return status query
+deactivate DB
+activate APIService
+alt #LightGreen Success
+    APIService --> View : Return message success
 else #Pink Failure
-    APIService --> View  : Return message failure
+    APIService --> View : Return message failure
 end
+deactivate User
+deactivate APIService
 @enduml

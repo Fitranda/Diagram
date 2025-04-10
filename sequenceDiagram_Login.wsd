@@ -5,24 +5,42 @@ control "API Service" as APIService
 database "My Sql" as DB
 
 autonumber
-User -> View --++ : Enter username and password
+activate User
+User -> View : Enter username and password
+activate View
 note right of View: Check username and password via api
-View -> APIService --++ : Login(username, password)
+View -> APIService : Login(username, password)
+deactivate View
+activate APIService
 note right of APIService: Check username and password\nin database
-APIService -> DB --++ : Login()
-DB --> APIService --++ : Return login result
+APIService -> DB : Login()
+deactivate APIService
+activate DB
+DB --> APIService : Return login result
+deactivate DB
+activate APIService
 APIService --> APIService: Check login result
 alt #LightGreen Success
     APIService --> View: Display Dashboard
 else #Pink Failure
     APIService --> View: Show Alert
 end
+deactivate APIService
 
 group Logout
-    User -> View --++ : Click logout button
-    View -> APIService --++ : Logout()
-    APIService -> DB --++ : Invalidate session
-    DB --> APIService --++ : Session invalidated
-    APIService --> View: Logout successful
+    User -> View : Click logout button
+    activate View
+    View -> APIService : Logout()
+    deactivate View
+    activate APIService
+    APIService -> DB : Invalidate session
+    deactivate APIService
+    activate DB
+    DB --> APIService : Session invalidated
+    deactivate DB
+    activate APIService
+    APIService --> View --++: Logout successful
+    deactivate APIService
 end
+deactivate User
 @enduml

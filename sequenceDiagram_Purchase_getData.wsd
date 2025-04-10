@@ -5,11 +5,21 @@ control "API Service" as APIService
 database "My Sql" as DB
 
 autonumber
-User -> View --++ : Choose date and click search
-View -> APIService --++ : getPurchase(date)
+activate User
+User -> View : Choose date and click search
+activate View
+View -> APIService : getPurchase(date)
+deactivate View
+activate APIService
 note right of APIService: Fetch data from database\nbased on the selected date
-APIService -> DB --++ : getPurchase(date)
-note right of APIService: Run Query\nin database
-DB --> APIService --++ : Return data
-APIService --> View : Display data
+APIService -> DB : getPurchase(date)
+deactivate APIService
+activate DB
+note right of DB: Run Query\nin database
+DB --> APIService : Return data
+deactivate DB
+activate APIService
+APIService --> View --++: Display data
+deactivate APIService
+deactivate User
 @enduml
